@@ -1,5 +1,7 @@
 FROM node:16-alpine as build
 
+RUN npm config set registry https://registry.npmjs.org/
+
 WORKDIR /app
 
 COPY package*.json ./
