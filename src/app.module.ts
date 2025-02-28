@@ -11,7 +11,7 @@ import { Student } from './students/entities/student.entity';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+        type: 'mysql',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT ?? '3306', 10),
       username: process.env.DB_USERNAME,
