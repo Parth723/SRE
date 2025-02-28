@@ -1,0 +1,13 @@
+name: Test Self-Hosted Runner
+
+on: [push]
+
+jobs:
+  test-runner:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Print Message
+        run: echo "Self-hosted runner is working!"
