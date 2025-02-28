@@ -5,11 +5,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DB_HOST=mysql 
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=root
-      - DB_NAME=SRESchool
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     depends_on:
       - mysql
     networks:
@@ -18,12 +18,21 @@ services:
   mysql:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: SRESchool
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - app-network
+
+  lint:
+    image: node:18
+    working_dir: /app
+    volumes:
+    - .:/app
+    command: npx eslint "{src,apps,libs,test}/**/*.ts" --fix
+
 
 networks:
   app-network:

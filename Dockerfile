@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16-alpine as build
 
 WORKDIR /app
 
@@ -9,6 +9,12 @@ RUN npm install
 COPY . .
 
 RUN npm run build
+
+FROM node:16-alpine
+
+WORKDIR /app
+
+COPY --from=build /app /app
 
 EXPOSE 3000
 
