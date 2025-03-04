@@ -2,8 +2,8 @@ name: Test Self-Hosted Runner
      
 on:
   push:
-    paths:
-      - "src/**" 
+    branches:
+      - main 
   workflow_dispatch:  
 
 jobs:
@@ -15,6 +15,9 @@ jobs:
       - name: Print Message
         run: echo "Self-hosted runner is working!"
 
+      - name: Set Docker Version
+        run: echo "VERSION=$(git describe --tags --always)" >> $GITHUB_ENV
+        
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -32,7 +35,7 @@ jobs:
         
 
       - name: Docker Build
-        run: docker build -t test-sre:latest .
+        run: docker build -t test-sre:v1.1.2 .
 
       - name: Docker Push
-        run: docker push test-sre:latest
+        run: docker push test-sre:v1.1.2
