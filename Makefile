@@ -15,7 +15,7 @@ migrate-db:
 
 build-api:
 	@echo "Building the REST API Docker image..."
-	$(DOCKER_COMPOSE) build -t $(DOCKER_IMAGE):$(VERSION) .
+	$(DOCKER_COMPOSE) build $(DOCKER_IMAGE):$(VERSION) .
 
 start-api: start-db migrate-db
 	@echo "Starting the API container..."
