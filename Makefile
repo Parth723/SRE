@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-DOCKER_COMPOSE = docker-compose --env-file .env
+DOCKER_COMPOSE = DOCKER_HOST=tcp://localhost:2375 docker-compose --env-file .env
 DOCKER_IMAGE = sre
 VERSION = v1.1.1
 
@@ -10,11 +10,11 @@ start-db:
 
 migrate-db:
 	@echo "Running database migrations..."
-    $(DOCKER_COMPOSE) exec app npm run migration:run
+	$(DOCKER_COMPOSE) exec app npm run migration:run
 
 build-api:
 	@echo "Building the REST API Docker image..."
-	docker build -t $(DOCKER_IMAGE):$(VERSION) .
+	DOCKER_HOST=tcp://localhost:2375 docker build -t $(DOCKER_IMAGE):$(VERSION) .
 
 start-api: start-db migrate-db
 	@echo "Starting the API container..."
